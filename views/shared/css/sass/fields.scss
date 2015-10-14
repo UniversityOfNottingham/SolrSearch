@@ -21,6 +21,34 @@
 
 }
 
+#facets-sort-form {
+
+  ul {
+    width: 50%;
+  }
+
+  li {
+    padding: 0.5rem;
+    cursor: pointer;
+
+    &:empty {
+      display: inherit;
+    }
+  }
+
+  .ui-sortable-placeholder {
+    border: 3px dashed #aaa;
+    height: 17px;
+    background: #ccc;
+  }
+
+  .move-icon {
+    float: right;
+    margin-top: 0.25em;
+  }
+
+}
+
 #submit {
   margin-top: 2em !important;
 }

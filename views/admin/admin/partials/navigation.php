@@ -14,6 +14,7 @@
     SolrSearch_Utils::nav_li($tab, 'server',      url('solr-search/server'),      __('Server'));
     SolrSearch_Utils::nav_li($tab, 'collections', url('solr-search/collections'), __('Collections'));
     SolrSearch_Utils::nav_li($tab, 'fields',      url('solr-search/fields'),      __('Fields'));
+    SolrSearch_Utils::nav_li($tab, 'facets',      url('solr-search/facets'),      __('Facets'));
     SolrSearch_Utils::nav_li($tab, 'results',     url('solr-search/results'),     __('Results'));
     SolrSearch_Utils::nav_li($tab, 'reindex',     url('solr-search/reindex'),     __('Index'));
 ?>
