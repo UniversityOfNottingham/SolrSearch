@@ -61,7 +61,7 @@
 
   <h2><?php echo __('Limit your search'); ?></h2>
 
-  <?php foreach ($results->facet_counts->facet_fields as $name => $facets): ?>
+  <?php foreach (SolrSearch_Helpers_Facet::sortFacets($results->facet_counts->facet_fields) as $name => $facets): ?>
 
     <!-- Does the facet have any hits? -->
     <?php if (count(get_object_vars($facets))): ?>
@@ -73,7 +73,7 @@
       <ul>
         <!-- Facets. -->
         <?php foreach ($facets as $value => $count): ?>
-          <li class="<?php echo $value; ?>">
+          <li class="<?php echo strtolower(str_replace(' ', '_', $value)); ?>">
 
             <!-- Facet URL. -->
             <?php $url = SolrSearch_Helpers_Facet::addFacet($name, $value); ?>
