@@ -47,7 +47,7 @@ class SolrSearch_Helpers_Facet
      * @param array $facets The parsed facets.
      * @return string The new URL.
      */
-    public static function makeUrl($facets)
+    public static function makeUrl($facets, $baseurl = null)
     {
 
         // Collapse the facets to `:` delimited pairs.
@@ -63,7 +63,7 @@ class SolrSearch_Helpers_Facet
         $qParam = array_key_exists('q', $_GET) ? $_GET['q'] : '';
 
         // Get the base results URL.
-        $results = url('solr-search');
+        $results = ($baseurl != null) ? $baseurl: url('solr-search');
 
         // String together the final route.
         return htmlspecialchars("$results?q=$qParam&facet=$fParam");

@@ -11,7 +11,7 @@
 
 
 <?php queue_css_file('results'); ?>
-<?php echo head(array('title' => __('Solr Search')));?>
+<?php echo head(array('title' => __('Search')));?>
 
 
 <h1><?php echo __('Search the Collection'); ?></h1>
@@ -103,6 +103,11 @@
   <h2 id="num-found">
     <?php echo $results->response->numFound; ?> results
   </h2>
+
+  <ul class="results-type">
+    <li class="active"><a href="<?php echo SolrSearch_Helpers_Facet::makeUrl(SolrSearch_Helpers_Facet::parseFacets()); ?>">Results</a></li>
+    <li><a href="<?php echo SolrSearch_Helpers_Facet::makeUrl(SolrSearch_Helpers_Facet::parseFacets(), url('solr-map')); ?>">Map</a></li>
+  </ul>
 
   <?php foreach ($results->response->docs as $doc): ?>
 
