@@ -53,14 +53,19 @@ class SolrSearch_Helpers_Index
         foreach ($item->getAllElementTexts() as $text) {
             $field = $fields->findByText($text);
 
+            // TODO nasty hack. refactor to allow field types to be configured in the UI
+            if ($field->is_indexed && $field->label == "Geo Location") {
+                $doc->addField($field->slug . "_g", $text->text);
+            }
+
             // Set text field.
             if ($field->is_indexed) {
-                $doc->setMultiValue($field->indexKey(), $text->text);
+                $doc->addField($field->indexKey(), $text->text);
             }
 
             // Set string field.
             if ($field->is_facet) {
-                $doc->setMultiValue($field->facetKey(), $text->text);
+                $doc->addField($field->facetKey(), $text->text);
             }
         }
     }
@@ -98,7 +103,7 @@ class SolrSearch_Helpers_Index
 
         // Tags:
         foreach ($item->getTags() as $tag) {
-            $doc->setMultiValue('tag', $tag->name);
+            $doc->addField('tag', $tag->name);
         }
 
         // Collection:
