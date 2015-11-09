@@ -76,6 +76,11 @@ class SolrSearch_ResultsController
 
     }
 
+    public function gridAction()
+    {
+        $this->indexAction();
+    }
+
     public function mapAction()
     {
         // Get pagination settings.

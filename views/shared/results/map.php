@@ -44,7 +44,7 @@
         <span class="applied-facet-value"><?php echo $f[1]; ?></span>
 
         <!-- Remove link. -->
-        <?php $url = SolrSearch_Helpers_Facet::removeFacet($f[0], $f[1]); ?>
+        <?php $url = SolrSearch_Helpers_Facet::removeFacet($f[0], $f[1], url('solr-map')); ?>
         (<a href="<?php echo $url; ?>">remove</a>)
 
       </li>
@@ -60,7 +60,7 @@
 
   <h2><?php echo __('Limit your search'); ?></h2>
 
-  <?php foreach ($results->facet_counts->facet_fields as $name => $facets): ?>
+  <?php foreach (SolrSearch_Helpers_Facet::sortFacets($results->facet_counts->facet_fields) as $name => $facets): ?>
 
     <!-- Does the facet have any hits? -->
     <?php if (count(get_object_vars($facets))): ?>
@@ -75,7 +75,7 @@
           <li class="<?php echo $value; ?>">
 
             <!-- Facet URL. -->
-            <?php $url = SolrSearch_Helpers_Facet::addFacet($name, $value); ?>
+            <?php $url = SolrSearch_Helpers_Facet::addFacet($name, $value, url('solr-map')); ?>
 
             <!-- Facet link. -->
             <a href="<?php echo $url; ?>" class="facet-value">
@@ -104,7 +104,8 @@
   </h2>
 
   <ul class="results-type">
-    <li><a href="<?php echo SolrSearch_Helpers_Facet::makeUrl(SolrSearch_Helpers_Facet::parseFacets()); ?>">Results</a></li>
+    <li><a href="<?php echo SolrSearch_Helpers_Facet::makeUrl(SolrSearch_Helpers_Facet::parseFacets()); ?>">List</a></li>
+    <li><a href="<?php echo SolrSearch_Helpers_Facet::makeUrl(SolrSearch_Helpers_Facet::parseFacets(), url('solr-grid')); ?>">Grid</a></li>
     <li class="active"><a href="<?php echo SolrSearch_Helpers_Facet::makeUrl(SolrSearch_Helpers_Facet::parseFacets(), url('solr-map')); ?>">Map</a></li>
   </ul>
 
@@ -118,7 +119,7 @@
   );
 
   foreach ($results->response->docs as $document) {
-    if (isset($document->{'56_g'})) {
+    if (isset($document->{SolrSearch_Helpers_View::lookupElementByName('Geo Location') . '_g'})) {
       $features[] = array(
           'type' => 'Feature',
           'geometry' => array(
@@ -127,7 +128,12 @@
                   function ($value) {
                     return (float) $value;
                   },
-                  array_reverse(explode(',', $document->{'56_g'})) // geojson format says longlat. leaflet expects latlong
+                  array_reverse(
+                      explode(
+                          ',',
+                          $document->{SolrSearch_Helpers_View::lookupElementByName('Geo Location') . '_g'}
+                      )
+                  ) // geojson format says longlat. leaflet expects latlong
               )
           ),
           'properties' => array(

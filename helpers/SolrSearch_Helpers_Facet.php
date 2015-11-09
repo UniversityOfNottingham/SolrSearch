@@ -103,7 +103,7 @@ class SolrSearch_Helpers_Facet
      * @param string $value The facet value.
      * @return string The new URL.
      */
-    public static function addFacet($field, $value)
+    public static function addFacet($field, $value, $baseurl = null)
     {
 
         // Get the current facets.
@@ -115,7 +115,7 @@ class SolrSearch_Helpers_Facet
         }
 
         // Rebuild the route.
-        return self::makeUrl($facets);
+        return self::makeUrl($facets, $baseurl);
 
     }
 
@@ -127,7 +127,7 @@ class SolrSearch_Helpers_Facet
      * @param string $value The facet value.
      * @return string The new URL.
      */
-    public static function removeFacet($field, $value)
+    public static function removeFacet($field, $value, $baseurl = null)
     {
 
         // Get the current facets.
@@ -140,7 +140,7 @@ class SolrSearch_Helpers_Facet
         }
 
         // Rebuild the route.
-        return self::makeUrl($reduced);
+        return self::makeUrl($reduced, $baseurl);
 
     }
 

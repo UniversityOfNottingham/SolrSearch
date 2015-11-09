@@ -45,7 +45,7 @@
         <span class="applied-facet-value"><?php echo $f[1]; ?></span>
 
         <!-- Remove link. -->
-        <?php $url = SolrSearch_Helpers_Facet::removeFacet($f[0], $f[1]); ?>
+        <?php $url = SolrSearch_Helpers_Facet::removeFacet($f[0], $f[1], url('solr-grid')); ?>
         (<a href="<?php echo $url; ?>">remove</a>)
 
       </li>
@@ -76,7 +76,7 @@
           <li class="<?php echo strtolower(str_replace(' ', '_', $value)); ?>">
 
             <!-- Facet URL. -->
-            <?php $url = SolrSearch_Helpers_Facet::addFacet($name, $value); ?>
+            <?php $url = SolrSearch_Helpers_Facet::addFacet($name, $value, url('solr-grid')); ?>
 
             <!-- Facet link. -->
             <a href="<?php echo $url; ?>" class="facet-value">
@@ -105,8 +105,8 @@
   </h2>
 
   <ul class="results-type">
-    <li class="active"><a href="<?php echo SolrSearch_Helpers_Facet::makeUrl(SolrSearch_Helpers_Facet::parseFacets()); ?>">List</a></li>
-    <li><a href="<?php echo SolrSearch_Helpers_Facet::makeUrl(SolrSearch_Helpers_Facet::parseFacets(), url('solr-grid')); ?>">Grid</a></li>
+    <li><a href="<?php echo SolrSearch_Helpers_Facet::makeUrl(SolrSearch_Helpers_Facet::parseFacets()); ?>">List</a></li>
+    <li class="active"><a href="<?php echo SolrSearch_Helpers_Facet::makeUrl(SolrSearch_Helpers_Facet::parseFacets(), url('solr-grid')); ?>">Grid</a></li>
     <li><a href="<?php echo SolrSearch_Helpers_Facet::makeUrl(SolrSearch_Helpers_Facet::parseFacets(), url('solr-map')); ?>">Map</a></li>
   </ul>
 
