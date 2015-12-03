@@ -74,32 +74,6 @@ class SolrSearch_ResultsController
         // Push results to the view.
         $this->view->results = $results;
 
-
-        // Get Collection information in case collection facet has been applied
-        $collection = false;
-        $parseFacets = SolrSearch_Helpers_Facet::parseFacets();
-
-        foreach($parseFacets as $f) {
-
-            // Check if contains the facet type: "collection"
-            if(in_array('collection', $f)) {
-
-                // Get collection name
-                $collectionName = $f[1];
-
-                // Get the record for this collection
-                $params = array('title' => $collectionName);
-                $collection = get_record('collection', $params);
-
-                // Get metadata
-                $title = metadata($collection, array('Dublin Core', 'Title'));
-                $description = metadata($collection, array('Dublin Core', 'Description'));
-            }
-        }
-
-        // Push collection info to view
-        $this->view->collection = $collection;
-
     }
 
     public function gridAction()
