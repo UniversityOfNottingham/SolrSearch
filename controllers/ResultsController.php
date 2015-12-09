@@ -88,7 +88,7 @@ class SolrSearch_ResultsController
                 $collectionName = $f[1];
 
                 // Get all public collections
-                $collections = get_records('collection', array('public' => 1));
+                $collections = get_records('Collection', array('public' => 1));
 
                 // Loop through collections
                 foreach($collections as $c) {
