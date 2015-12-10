@@ -110,7 +110,7 @@ class SolrSearch_ResultsController
 
     }
 
-    public function gridAction()
+    public function listAction()
     {
         $this->indexAction();
     }
