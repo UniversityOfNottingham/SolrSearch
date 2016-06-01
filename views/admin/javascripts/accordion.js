@@ -15,4 +15,16 @@ jQuery(function($) {
     heightStyle: "content"
   });
 
+  $( "#sortable" ).sortable({
+    placeholder: "ui-sortable-placeholder",
+    update: function() {
+      var order = $('#sortable').sortable('toArray').toString();
+      $('input[name=facetorder]').val(order);
+    },
+    create: function(e, ui) {
+      var order = $('#sortable').sortable('toArray').toString();
+      $('input[name=facetorder]').val(order);
+    }
+  });
+
 });

@@ -74,6 +74,74 @@ class SolrSearch_ResultsController
         // Push results to the view.
         $this->view->results = $results;
 
+
+        // Get Collection information in case collection facet has been applied
+        $collection = false;
+        $parseFacets = SolrSearch_Helpers_Facet::parseFacets();
+
+        foreach($parseFacets as $f) {
+
+            // Check if contains the facet type: "collection"
+            if(in_array('collection', $f)) {
+
+                // Get collection name
+                $collectionName = $f[1];
+
+                // Get all public collections
+                $collections = get_records('Collection', array('public' => 1));
+
+                // Loop through collections
+                foreach($collections as $c) {
+
+                    // Check name with facet name
+                    if(metadata($c, array('Dublin Core', 'Title')) == $collectionName) {
+
+                        // assign collection
+                        $collection = $c;
+                    }
+
+                }
+
+            }
+        }
+
+        // Push collection to the view
+        $this->view->collection = $collection;
+
+    }
+
+    public function listAction()
+    {
+        $this->indexAction();
+    }
+
+    public function mapAction()
+    {
+        // Get pagination settings.
+        $limit = 1000;
+        $start = 0;
+
+        // determine whether to display private items or not
+        // items will only be displayed if:
+        // solr_search_display_private_items has been enabled in the Solr Search admin panel
+        // user is logged in
+        // user_role has sufficient permissions
+
+        $user = current_user();
+        if(get_option('solr_search_display_private_items')
+            && $user
+            && is_allowed('Items','showNotPublic')) {
+            // limit to public items
+            $limitToPublicItems = false;
+        } else {
+            $limitToPublicItems = true;
+        }
+
+        // Execute the query.
+        $results = $this->_search($start, $limit, $limitToPublicItems);
+
+        // Push results to the view.
+        $this->view->results = $results;
     }
 
 

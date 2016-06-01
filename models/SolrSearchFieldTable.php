@@ -135,6 +135,30 @@ class SolrSearchFieldTable extends Omeka_Db_Table
 
     }
 
+    /**
+     * Get a list of all active facets.
+     *
+     * @return array The list of active facets.
+     */
+    public function getActiveFacets()
+    {
+
+        $active = array();
+
+        $select = $this->getSelect();
+        $select->where('is_facet=?');
+        $this->applySorting($select, 'facet_order', 'asc');
+        $facets = $this->fetchObjects($select, array(1));
+
+        // Get names for active facets.
+        foreach ($facets as $field) {
+            $active[] = $field;
+        }
+
+        return $active;
+
+    }
+
 
     /**
      * Get all fields grouped by element set id.

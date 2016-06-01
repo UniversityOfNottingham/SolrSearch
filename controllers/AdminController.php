@@ -186,6 +186,47 @@ class SolrSearch_AdminController
 
     }
 
+    /**
+     * Display the "Field Configuration" form.
+     */
+    public function facetsAction()
+    {
+
+        // Get the facet mapping table.
+        /** @var SolrSearchFieldTable $fieldTable */
+        $fieldTable = $this->_helper->db->getTable('SolrSearchField');
+
+        // If the form was submitted.
+        if ($this->_request->isPost()) {
+
+            // Gather the POST arguments.
+            $post = $this->_request->getPost();
+
+            if (!empty($post['facetorder'])) {
+                $ordering = explode(',', $post['facetorder']);
+
+                $count = 0;
+                foreach ($ordering as $order) {
+                    $facet = $fieldTable->find($order);
+                    $facet->facet_order = $count++;
+
+                    $facet->save();
+                }
+            }
+
+            // Flash success.
+            $this->_helper->flashMessenger(
+                __('Facets successfully updated!'),
+                'success'
+            );
+
+        }
+
+        // Assign the facet groups.
+        $this->view->facets = $fieldTable->getActiveFacets();
+
+    }
+
 
     /**
      * Display the "Results Configuration" form.

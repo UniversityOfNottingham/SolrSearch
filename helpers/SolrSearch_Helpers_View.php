@@ -31,13 +31,28 @@ class SolrSearch_Helpers_View
      *
      * @return string Human readable solr element name.
      */
-    public static function lookupElement($field)
+    public static function lookupElementByField($field)
     {
         $fieldArray = explode('_', $field);
         $fieldId = $fieldArray[0];
         $db = get_db();
         $element = $db->getTable('Element')->find($fieldId);
         return $element['name'];
+    }
+
+    /**
+     * Lookup the element name for a solr element.
+     *
+     * @param string $field Field name to look up.
+     *
+     * @return string Human readable solr element name.
+     */
+    public static function lookupElementByName($field)
+    {
+        $db = get_db();
+        $element = $db->getTable('Element')->findBy(array('name' => $field));
+
+        return $element[0]->id;
     }
 
 

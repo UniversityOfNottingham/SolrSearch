@@ -37,6 +37,11 @@ class SolrSearchField extends Omeka_Record_AbstractRecord
      */
     public $is_facet;
 
+    /**
+     * Sort order of Facets types on a page [int]
+     */
+    public $facet_order;
+
 
     /**
      * Set the parent element reference.
